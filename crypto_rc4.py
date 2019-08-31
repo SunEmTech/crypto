@@ -6,11 +6,28 @@ Created on Fri Aug 30 22:01:40 2019
 
 Cryptography  RC4 algo v0.1
 """
+import sys
+
+program_name = sys.argv[0]
+args = sys.argv[1:]
+countArg = len(args)
+
+consoleMode = False
+if countArg != 3:
+    print("Usage:")
+    print("app <passphrase> <in file> <out file>")
+    print("No argument given, encrypt text on console", end = "\n\n")
+    consoleMode = True
 
 #user input
-key = "password"
-key = input("key:")
-data = input("data:")
+if consoleMode:
+    key = input("key:")
+    data = input("data:")
+else:
+    key = args[0]
+    fileIn = open(args[1], "r")
+    data = fileIn.read()
+
 
 key = [ord(key[i]) for i in range(len(key))]
 
@@ -56,6 +73,12 @@ def encrypt(data, stream):
 
 res = encrypt(data, get_byte_stream())
 
-for i in res:
-    print(i, end='')
-print("")
+if consoleMode:
+    for i in res:
+        print(i, end='')
+    print("")
+else:
+    fileOut = open(args[2], "w")
+    for i in res:
+        fileOut.write(i)
+    fileOut.close()
