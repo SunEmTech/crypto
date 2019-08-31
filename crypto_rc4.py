@@ -10,7 +10,7 @@ Cryptography  RC4 algo v0.1
 #user input
 key = "password"
 key = input("key:")
-print (key)
+data = input("data:")
 
 key = [ord(key[i]) for i in range(len(key))]
 
@@ -43,19 +43,19 @@ def get_byte_stream():
         yield k
 
 
-# returns cipher
+
 def encrypt(data, stream):
+    """
+    returns cypher when data is passed.
+    returns data when cypher is passed.
+    """
     cypher = []
     cypher = [chr((ord(d) ^ next(stream))) for d in data]
     return cypher
 
-#data = [254, 247, 59]
-
-data = input("data:")
-print(data)
 
 res = encrypt(data, get_byte_stream())
 
 for i in res:
     print(i, end='')
-
+print("")
